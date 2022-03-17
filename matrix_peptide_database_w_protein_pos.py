@@ -15,6 +15,7 @@ def extract_peptides(input):
         pos = []
         peptides = []
         positions = []
+
         # start position of peptides
         for p in pep:
             start = protein_length
@@ -228,7 +229,6 @@ def extract_peptides(input):
                         if protein + "_" + str(pos_missed2 + 1) not in temp:
                             dict[missed4] = temp + ";" + protein + "_" + str(pos_missed2 + 1)
 
-
     return (dict)
 
 RAP_DB = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/RAP-DB.fasta"
@@ -236,6 +236,7 @@ RAP_DB_seq_dict = extract_peptides(RAP_DB)
 
 MSU = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/MSU.fasta"
 MSU_seq_dict = extract_peptides(MSU)
+
 
 UP = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/Uniprot.fasta"
 UP_seq_dict = extract_peptides(UP)
@@ -309,26 +310,36 @@ PXD019291_list=[]
 for i in peptide_list:
     if i.split("-")[0] in RAP_DB_seq_dict.keys():
         temp_list=RAP_DB_seq_dict[i.split("-")[0]].split(";")
+        final=""
         for temp in temp_list:
             pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
-            RAP_DB_list.append(temp+"_"+str(pos))
+            final+=temp+"_"+str(pos)+";"
+        RAP_DB_list.append(final[:-1])
     else:
         RAP_DB_list.append("N/A")
     if i.split("-")[0] in MSU_seq_dict.keys():
         temp_list=MSU_seq_dict[i.split("-")[0]].split(";")
+        if "EQAGKRSEDDDLEEIQEER" in i:
+            print(temp_list)
+        final=""
         for temp in temp_list:
-            print(temp)
             pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
-            MSU_list.append(temp+"_"+str(pos))
+            final+=temp+"_"+str(pos)+";"
+            if "EQAGKRSEDDDLEEIQEER" in i:
+                print(final)
+        MSU_list.append(final[:-1])
     else:
         MSU_list.append("N/A")
     if i.split("-")[0] in UP_seq_dict.keys():
         temp_list=UP_seq_dict[i.split("-")[0]].split(";")
+        final=""
         for temp in temp_list:
             pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
-            UP_list.append(temp+"_"+str(pos))
+            final+=temp+"_"+str(pos)+";"
+        UP_list.append(final[:-1])
     else:
         UP_list.append("N/A")
+
     if i in PXD000923_peptides:
         PXD000923_list.append(1)
     else:
@@ -362,6 +373,24 @@ for i in peptide_list:
     else:
         PXD019291_list.append(0)
 
-df_final = pd.DataFrame(list(zip(peptide_list,RAP_DB_list,MSU_list,UP_list,PXD000923_list,PXD002222_list,PXD002756_list,PXD004705_list,PXD004939_list,PXD005241_list,
-                                 PXD012764_list,PXD019291_list)), columns = ['Peptide', 'RAP_DB', 'MSU', 'UP',"PXD000923","PXD002222","PXD002756","PXD004705","PXD004939","PXD005241","PXD012764","PXD019291"])
+
+print(len(peptide_list), len(RAP_DB_list), len(MSU_list), len(UP_list),len(PXD000923_list),len(PXD002222_list),len(PXD002756_list),len(PXD004705_list),len(PXD004939_list),len(PXD005241_list),
+      len(PXD012764_list),len(PXD019291_list))
+
+df_final = pd.DataFrame()
+df_final['Peptide']=peptide_list
+df_final['RAP_DB']=RAP_DB_list
+df_final['MSU']=MSU_list
+df_final['UP']=UP_list
+df_final['PXD000923']=PXD000923_list
+df_final['PXD002222']=PXD002222_list
+df_final['PXD002756']=PXD002756_list
+df_final['PXD004705']=PXD004705_list
+df_final['PXD004939']=PXD004939_list
+df_final['PXD005241']=PXD005241_list
+df_final['PXD012764']=PXD012764_list
+df_final['PXD019291']=PXD019291_list
+
+#df_final = pd.DataFrame(list(zip(peptide_list,RAP_DB_list,MSU_list,UP_list,PXD000923_list,PXD002222_list,PXD002756_list,PXD004705_list,PXD004939_list,PXD005241_list,
+                                 #PXD012764_list,PXD019291_list)), columns = ['Peptide', 'RAP_DB', 'MSU', 'UP',"PXD000923","PXD002222","PXD002756","PXD004705","PXD004939","PXD005241","PXD012764","PXD019291"])
 df_final.to_csv("C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/Rice_phosphosite_matrix_updated"+str(flr_filter)+"_w_protein-pos.csv", index=False)

@@ -11,7 +11,7 @@ def extract_peptides(input):
         # cut at K or R followed by P
         pep_temp = re.sub(r'(?<=[RK])(?=[^P])', '\n', seq, 0, re.DOTALL)
         pep = (pep_temp.split())
-        protein_length = 0
+        protein_length = 1
         pos = []
         peptides = []
         positions = []
@@ -121,7 +121,7 @@ def extract_peptides(input):
         if seq.startswith('M'):
             pep_temp2 = re.sub(r'(?<=[RK])(?=[^P])', '\n', (seq[1:]), 0, re.DOTALL)
             pep2 = (pep_temp2.split())
-            protein_length2 = 0
+            protein_length2 = 1
             pos3 = []
             peptides2 = []
             positions2 = []
