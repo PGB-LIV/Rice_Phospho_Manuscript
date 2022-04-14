@@ -110,6 +110,7 @@ def extract_peptides(input):
                     if protein + "_" + str(pos_missed) not in temp:
                         dict[missed] = temp + ";" + protein + "_" + str(pos_missed)
             if pos2 <= (len(peptides) - 2):
+                pos_missed = (positions[pos2])
                 missed = (peptides[pos2] + peptides[pos2 + 1])
                 if missed not in dict.keys():
                     dict[missed] = protein + "_" + str(pos_missed)
@@ -237,51 +238,50 @@ RAP_DB_seq_dict = extract_peptides(RAP_DB)
 MSU = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/MSU.fasta"
 MSU_seq_dict = extract_peptides(MSU)
 
-
 UP = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/Uniprot.fasta"
 UP_seq_dict = extract_peptides(UP)
 
 flr_filter=0.05
 
-PXD000923 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD000923/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD000923 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD000923/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df = pd.read_csv(PXD000923)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD000923_peptides=df['Peptide_pos'].unique()
-PXD002222 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD002222/6_files/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD002222 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD002222/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD002222)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD002222_peptides=df['Peptide_pos'].unique()
-PXD002756 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD002756/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD002756 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD002756/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD002756)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD002756_peptides=df['Peptide_pos'].unique()
-PXD004705 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD004705/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD004705 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD004705/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD004705)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD004705_peptides=df['Peptide_pos'].unique()
-PXD004939 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD004939/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD004939 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD004939/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD004939)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD004939_peptides=df['Peptide_pos'].unique()
-PXD005241 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD005241/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD005241 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD005241/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD005241)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD005241_peptides=df['Peptide_pos'].unique()
-PXD012764 = "C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/PXD012764/comet_tryptic/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD012764 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD012764/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD012764)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD012764_peptides=df['Peptide_pos'].unique()
-PXD019291 = "C:/Users/krams/Dropbox/PTMExchange/Rice/PXD019291/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD019291 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD019291/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
 df=pd.read_csv(PXD019291)
 df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM_positions'].astype(str)
+df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
 PXD019291_peptides=df['Peptide_pos'].unique()
 
 PXD000923_peptides=list(np.array(PXD000923_peptides))
@@ -319,14 +319,10 @@ for i in peptide_list:
         RAP_DB_list.append("N/A")
     if i.split("-")[0] in MSU_seq_dict.keys():
         temp_list=MSU_seq_dict[i.split("-")[0]].split(";")
-        if "EQAGKRSEDDDLEEIQEER" in i:
-            print(temp_list)
         final=""
         for temp in temp_list:
             pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
             final+=temp+"_"+str(pos)+";"
-            if "EQAGKRSEDDDLEEIQEER" in i:
-                print(final)
         MSU_list.append(final[:-1])
     else:
         MSU_list.append("N/A")
@@ -373,10 +369,6 @@ for i in peptide_list:
     else:
         PXD019291_list.append(0)
 
-
-print(len(peptide_list), len(RAP_DB_list), len(MSU_list), len(UP_list),len(PXD000923_list),len(PXD002222_list),len(PXD002756_list),len(PXD004705_list),len(PXD004939_list),len(PXD005241_list),
-      len(PXD012764_list),len(PXD019291_list))
-
 df_final = pd.DataFrame()
 df_final['Peptide']=peptide_list
 df_final['RAP_DB']=RAP_DB_list
@@ -393,4 +385,4 @@ df_final['PXD019291']=PXD019291_list
 
 #df_final = pd.DataFrame(list(zip(peptide_list,RAP_DB_list,MSU_list,UP_list,PXD000923_list,PXD002222_list,PXD002756_list,PXD004705_list,PXD004939_list,PXD005241_list,
                                  #PXD012764_list,PXD019291_list)), columns = ['Peptide', 'RAP_DB', 'MSU', 'UP',"PXD000923","PXD002222","PXD002756","PXD004705","PXD004939","PXD005241","PXD012764","PXD019291"])
-df_final.to_csv("C:/Users/krams/Dropbox/PTMExchange/Rice/Eric/Rice_phosphosite_matrix_updated"+str(flr_filter)+"_w_protein-pos.csv", index=False)
+df_final.to_csv("C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/Rice_phosphosite_matrix_updated"+str(flr_filter)+"_w_protein-pos.csv", index=False)
