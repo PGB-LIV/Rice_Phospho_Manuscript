@@ -123,7 +123,7 @@ def extract_peptides(input):
         if seq.startswith('M'):
             pep_temp2 = re.sub(r'(?<=[RK])(?=[^P])', '\n', (seq[1:]), 0, re.DOTALL)
             pep2 = (pep_temp2.split())
-            protein_length2 = 1
+            protein_length2 = 2
             pos3 = []
             peptides2 = []
             positions2 = []
@@ -232,89 +232,99 @@ def extract_peptides(input):
 
     return (dict)
 
-RAP_DB = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/RAP-DB.fasta"
+RAP_DB = "C:/users/krams/Dropbox/PTMExchange/Rice/database/fasta/RAP-DB.fasta"
 RAP_DB_seq_dict = extract_peptides(RAP_DB)
 
-MSU = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/MSU.fasta"
+MSU = "C:/users/krams/Dropbox/PTMExchange/Rice/database/fasta/MSU.fasta"
 MSU_seq_dict = extract_peptides(MSU)
 
-UP = "C:/Users/krams/Dropbox/PTMExchange/Rice/database/fasta/Uniprot.fasta"
+UP = "C:/users/krams/Dropbox/PTMExchange/Rice/database/fasta/Uniprot.fasta"
 UP_seq_dict = extract_peptides(UP)
 
 flr_filter=0.05
 
-PXD000923 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD000923/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+PXD000923 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD000923/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df = pd.read_csv(PXD000923)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD000923_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD000923_peptides=df['Peptide_pos'].unique()
-PXD002222 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD002222/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD000923_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD000923_peptides=df['Peptide_mod_pos'].unique()
+PXD002222 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD002222/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD002222)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD002222_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD002222_peptides=df['Peptide_pos'].unique()
-PXD002756 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD002756/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD002222_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD002222_peptides=df['Peptide_mod_pos'].unique()
+PXD002756 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD002756/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD002756)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD002756_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD002756_peptides=df['Peptide_pos'].unique()
-PXD004705 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD004705/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD002756_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD002756_peptides=df['Peptide_mod_pos'].unique()
+PXD004705 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD004705/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD004705)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD004705_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD004705_peptides=df['Peptide_pos'].unique()
-PXD004939 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD004939/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD004705_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD004705_peptides=df['Peptide_mod_pos'].unique()
+PXD004939 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD004939/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD004939)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD004939_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD004939_peptides=df['Peptide_pos'].unique()
-PXD005241 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD005241/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD004939_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD004939_peptides=df['Peptide_mod_pos'].unique()
+PXD005241 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD005241/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD005241)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD005241_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD005241_peptides=df['Peptide_pos'].unique()
-PXD012764 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD012764/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD005241_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD005241_peptides=df['Peptide_mod_pos'].unique()
+PXD012764 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD012764/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD012764)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD012764_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD012764_peptides=df['Peptide_pos'].unique()
-PXD019291 = "C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/PXD019291/FDR_0.01_PTM_score_0/All_confident_PTM_no_collapse_Site-based_spectrum_match_FLR_pAla.csv"
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD012764_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD012764_peptides=df['Peptide_mod_pos'].unique()
+PXD019291 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD019291/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
 df=pd.read_csv(PXD019291)
-df=df.loc[df['pAla_q_value']<=flr_filter]
-df['Peptide_pos']=df['Peptide']+"-"+df['PTM positions'].astype(str)
-df=df.sort_values(['Peptide_pos','PTM_final_prob'],ascending=[True,True])
-df=df.drop_duplicates(subset=('Peptide_pos'),keep="last",inplace=False)
-df['Score_FLR']=df['PTM_final_prob'].astype(str)+";"+df['pAla_q_value'].astype(str)
-PXD019291_dict=dict(zip(df.Peptide_pos, df.Score_FLR))
-PXD019291_peptides=df['Peptide_pos'].unique()
+df=df.loc[df['pA_q_value_BA']<=flr_filter]
+#df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+PXD019291_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+PXD019291_peptides=df['Peptide_mod_pos'].unique()
+# #"PXD001168"
+# PXD001168 = "C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/PXD001168/FDR_updated_0.01/binomial_peptidoform_collapsed_FLR.csv"
+# df=pd.read_csv(PXD001168)
+# df=df.loc[df['pA_q_value_BA']<=flr_filter]
+# #df = df[df.Peptide.str.count('S|T|Y|A')>df.Peptide_mod.str.count("Phospho")]
+# df=df.sort_values(['Peptide_mod_pos','Binomial_final_score'],ascending=[True,True])
+# df=df.drop_duplicates(subset=('Peptide_mod_pos'),keep="last",inplace=False)
+# df['Score_FLR']=df['Binomial_final_score'].astype(str)+";"+df['pA_q_value_BA'].astype(str)
+# PXD001168_dict=dict(zip(df.Peptide_mod_pos, df.Score_FLR))
+# PXD001168_peptides=df['Peptide_mod_pos'].unique()
 
 PXD000923_peptides=list(np.array(PXD000923_peptides))
 PXD002222_peptides=list(np.array(PXD002222_peptides))
@@ -324,9 +334,11 @@ PXD004939_peptides=list(np.array(PXD004939_peptides))
 PXD005241_peptides=list(np.array(PXD005241_peptides))
 PXD012764_peptides=list(np.array(PXD012764_peptides))
 PXD019291_peptides=list(np.array(PXD019291_peptides))
-peptide_list=PXD000923_peptides+PXD002222_peptides+PXD002756_peptides+PXD004705_peptides+PXD004939_peptides+PXD005241_peptides+PXD012764_peptides+PXD019291_peptides
+# PXD001168_peptides=list(np.array(PXD001168_peptides))
+peptide_list=PXD000923_peptides+PXD002222_peptides+PXD002756_peptides+PXD004705_peptides+PXD004939_peptides+PXD005241_peptides+PXD012764_peptides+PXD019291_peptides#+PXD001168_peptides
 peptide_list=list(set(peptide_list))
 
+peptide_list_no_mods = []
 RAP_DB_list = []
 MSU_list = []
 UP_list = []
@@ -338,6 +350,7 @@ PXD004939_list=[]
 PXD005241_list=[]
 PXD012764_list=[]
 PXD019291_list=[]
+#PXD001168_list=[]
 PXD000923_score_list=[]
 PXD002222_score_list=[]
 PXD002756_score_list=[]
@@ -346,6 +359,7 @@ PXD004939_score_list=[]
 PXD005241_score_list=[]
 PXD012764_score_list=[]
 PXD019291_score_list=[]
+#PXD001168_score_list=[]
 PXD000923_FLR_list=[]
 PXD002222_FLR_list=[]
 PXD002756_FLR_list=[]
@@ -354,31 +368,35 @@ PXD004939_FLR_list=[]
 PXD005241_FLR_list=[]
 PXD012764_FLR_list=[]
 PXD019291_FLR_list=[]
+#PXD001168_FLR_list=[]
 
 for i in peptide_list:
-    if i.split("-")[0] in RAP_DB_seq_dict.keys():
-        temp_list=RAP_DB_seq_dict[i.split("-")[0]].split(";")
+    peptidoform=i.rsplit("-",1)[0]
+    peptide=re.sub(r'\[.*?\]','',peptidoform)
+    peptide_list_no_mods.append(peptide)
+    if peptide in RAP_DB_seq_dict.keys():
+        temp_list=RAP_DB_seq_dict[peptide].split(";")
         final=""
         for temp in temp_list:
-            pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
+            pos=int(i.rsplit("-",1)[1])+int(temp.split("_")[-1])-1
             final+=temp+"_"+str(pos)+";"
         RAP_DB_list.append(final[:-1])
     else:
         RAP_DB_list.append("N/A")
-    if i.split("-")[0] in MSU_seq_dict.keys():
-        temp_list=MSU_seq_dict[i.split("-")[0]].split(";")
+    if peptide in MSU_seq_dict.keys():
+        temp_list=MSU_seq_dict[peptide].split(";")
         final=""
         for temp in temp_list:
-            pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
+            pos=int(i.rsplit("-",1)[1])+int(temp.split("_")[-1])-1
             final+=temp+"_"+str(pos)+";"
         MSU_list.append(final[:-1])
     else:
         MSU_list.append("N/A")
-    if i.split("-")[0] in UP_seq_dict.keys():
-        temp_list=UP_seq_dict[i.split("-")[0]].split(";")
+    if peptide in UP_seq_dict.keys():
+        temp_list=UP_seq_dict[peptide].split(";")
         final=""
         for temp in temp_list:
-            pos=int(i.split("-")[1])+int(temp.split("_")[-1])-1
+            pos=int(i.rsplit("-",1)[1])+int(temp.split("_")[-1])-1
             final+=temp+"_"+str(pos)+";"
         UP_list.append(final[:-1])
     else:
@@ -448,9 +466,19 @@ for i in peptide_list:
         PXD019291_list.append(0)
         PXD019291_score_list.append("N/A")
         PXD019291_FLR_list.append("N/A")
+    #PXD001168
+    #if i in PXD001168_peptides:
+    #    PXD001168_list.append(1)
+    #    PXD001168_score_list.append(PXD001168_dict[i].split(";")[0])
+    #    PXD001168_FLR_list.append(PXD001168_dict[i].split(";")[1])
+    #else:
+    #    PXD001168_list.append(0)
+    #    PXD001168_score_list.append("N/A")
+    #    PXD001168_FLR_list.append("N/A")
 
 df_final = pd.DataFrame()
-df_final['Peptide']=peptide_list
+df_final['Peptide_mod']=peptide_list
+df_final['Peptide']=peptide_list_no_mods
 df_final['RAP_DB']=RAP_DB_list
 df_final['MSU']=MSU_list
 df_final['UP']=UP_list
@@ -462,6 +490,7 @@ df_final['PXD004939']=PXD004939_list
 df_final['PXD005241']=PXD005241_list
 df_final['PXD012764']=PXD012764_list
 df_final['PXD019291']=PXD019291_list
+#df_final['PXD001168']=PXD001168_list
 df_final['PXD000923_score']=PXD000923_score_list
 df_final['PXD002222_score']=PXD002222_score_list
 df_final['PXD002756_score']=PXD002756_score_list
@@ -470,6 +499,7 @@ df_final['PXD004939_score']=PXD004939_score_list
 df_final['PXD005241_score']=PXD005241_score_list
 df_final['PXD012764_score']=PXD012764_score_list
 df_final['PXD019291_score']=PXD019291_score_list
+#df_final['PXD001168_score']=PXD001168_score_list
 df_final['PXD000923_FLR']=PXD000923_FLR_list
 df_final['PXD002222_FLR']=PXD002222_FLR_list
 df_final['PXD002756_FLR']=PXD002756_FLR_list
@@ -478,10 +508,11 @@ df_final['PXD004939_FLR']=PXD004939_FLR_list
 df_final['PXD005241_FLR']=PXD005241_FLR_list
 df_final['PXD012764_FLR']=PXD012764_FLR_list
 df_final['PXD019291_FLR']=PXD019291_FLR_list
+#df_final['PXD001168_FLR']=PXD001168_FLR_list
 
 for i in range(len(df_final)):
     flr1_count=0
-    for database in ["PXD000923_FLR","PXD002222_FLR","PXD002756_FLR","PXD004705_FLR","PXD004939_FLR","PXD005241_FLR","PXD012764_FLR","PXD019291_FLR"]:
+    for database in ["PXD000923_FLR","PXD002222_FLR","PXD002756_FLR","PXD004705_FLR","PXD004939_FLR","PXD005241_FLR","PXD012764_FLR","PXD019291_FLR"]:#,"PXD001168_FLR"]:
         #df_final[database]=df_final[database].astype(float)
         #df_final=df_final.fillna("-")
         if df_final.loc[i,database]!="N/A":
@@ -495,5 +526,5 @@ for i in range(len(df_final)):
         df_final.loc[i,'PTM_FLR_category']="Bronze"
 
 #df_final = pd.DataFrame(list(zip(peptide_list,RAP_DB_list,MSU_list,UP_list,PXD000923_list,PXD002222_list,PXD002756_list,PXD004705_list,PXD004939_list,PXD005241_list,
-                                 #PXD012764_list,PXD019291_list)), columns = ['Peptide', 'RAP_DB', 'MSU', 'UP',"PXD000923","PXD002222","PXD002756","PXD004705","PXD004939","PXD005241","PXD012764","PXD019291"])
-df_final.to_csv("C:/Users/krams/Dropbox/PTMExchange/Rice/New_build_ID/Rice_phosphosite_matrix_updated"+str(flr_filter)+"_w_protein-pos_scores_FLR.csv", index=False)
+#PXD012764_list,PXD019291_list)), columns = ['Peptide', 'RAP_DB', 'MSU', 'UP',"PXD000923","PXD002222","PXD002756","PXD004705","PXD004939","PXD005241","PXD012764","PXD019291"])
+df_final.to_csv("C:/users/krams/Dropbox/PTMExchange/Rice/New_build_ID/FLR_updated/05.05.23/Rice_phosphosite_matrix_binomial_peptidoform_"+str(flr_filter)+"_w_protein-pos_scores_FLR.csv", index=False)
