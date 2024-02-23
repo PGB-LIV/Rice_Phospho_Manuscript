@@ -5,6 +5,7 @@ Files for re-analysis of rice phosphoproteomics datasets located in PRIDE [PXD04
 https://github.com/PGB-LIV/mzidFLR
 
 ## Genomic site data with SNP annotation
+
 To generate supplementary file *Gemomic_site_data_w_SNP_annotation.csv*:
 
 Uses outputs from following repros:
@@ -12,15 +13,16 @@ Uses outputs from following repros:
 2.  https://github.com/CBFLivUni/mapping_and_enrichment
 
 Requirements:
-+ RAP_DB sequence fasta
-+ MSU sequence fasta
-+ Uniprot sequence fasta
++ [RAP_DB sequence fasta](https://rapdb.dna.affrc.go.jp/download/irgsp1.html)
++ [MSU sequence fasta](http://rice.uga.edu/downloads_gad.shtml)
++ [Uniprot sequence fasta](https://www.uniprot.org/uniprotkb?query=oryza+sativa&facets=model_organism%3A39947)
 
 ### Python scripts:
 ![Workflow image](https://github.com/kramsbottom/Rice_scripts/assets/57440286/441379a6-6e30-4d34-8254-fcea7590db35)
 
 **Motif_seqs.py** 
-Generates sequences used for motif anylysis 
+
+Generates sequences used for motif analysis 
 
 Requirements:
 + Output from *SNP_seq_summary.py*
