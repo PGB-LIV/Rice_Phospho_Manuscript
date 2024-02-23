@@ -21,6 +21,7 @@ Requirements:
 
 **Motif_seqs.py** 
 Generates sequences used for motif anylysis 
+
 Requirements:
 + Output from *SNP_seq_summary.py*
 + Database used for re-analysis results [*ie. Osativa_super_annotation_union_noIC4R_v2_cRAP.fasta*](https://ftp.pride.ebi.ac.uk/pride/data/archive/2023/11/PXD046188/Osativa_super_annotation_union_noIC4R_v2_cRAP_decoy.fasta)
