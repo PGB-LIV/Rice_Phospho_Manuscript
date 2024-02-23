@@ -32,5 +32,7 @@ Requirements:
 To generate manuscript figures:
 - Figure 1: Overview of phosphosite counts.
 - Figure 3: Motif analysis.
-- Figure 4: SAAV analysis. 
+- Figure 4: SAAV analysis.
+
+Located in Figs subfolder
   
